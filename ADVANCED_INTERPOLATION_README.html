@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ADVANCED_INTERPOLATION_README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="documentation-des-m%C3%A9thodes-dinterpolation-avanc%C3%A9es">Documentation des Méthodes d'Interpolation Avancées</h1>
+<h2 id="%F0%9F%8E%AF-m%C3%A9thodes-dinterpolation-avanc%C3%A9es---nouvelles-impl%C3%A9mentations">🎯 <strong>Méthodes d'Interpolation Avancées - Nouvelles Implémentations</strong></h2>
+<h3 id="interpolation-par-polyn%C3%B4mes-orthogonaux"><strong>Interpolation par Polynômes Orthogonaux</strong></h3>
+<h4 id="polyn%C3%B4mes-de-chebyshev"><strong>Polynômes de Chebyshev</strong></h4>
+<p><strong>Principe</strong> : Utilise les polynômes de Chebyshev pour minimiser le phénomène de Runge et optimiser la convergence.</p>
+<p><strong>Formule récursive</strong> :</p>
+<pre class="hljs"><code><div>T₀(x) = 1
+T₁(x) = x
+Tₙ₊₁(x) = 2x·Tₙ(x) - Tₙ₋₁(x)
+</div></code></pre>
+<p><strong>Nœuds de Chebyshev</strong> (optimaux pour minimiser l'erreur) :</p>
+<pre class="hljs"><code><div>xᵢ = cos((2i-1)π/(2n))  pour i = 1,2,...,n
+</div></code></pre>
+<p><strong>Avantages</strong> :</p>
+<ul>
+<li>Minimise l'oscillation (phénomène de Runge)</li>
+<li>Convergence uniforme garantie</li>
+<li>Conditionnement optimal</li>
+<li>Stabilité numérique excellente</li>
+</ul>
+<p><strong>Cas d'application</strong> :</p>
+<ul>
+<li>Approximation de fonctions sur [-1,1]</li>
+<li>Éviter le phénomène de Runge pour polynômes de degré élevé</li>
+<li>Spectral methods en analyse numérique</li>
+<li>Calcul de quadratures de Gauss-Chebyshev</li>
+</ul>
+<h4 id="polyn%C3%B4mes-de-legendre"><strong>Polynômes de Legendre</strong></h4>
+<p><strong>Principe</strong> : Famille orthogonale sur [-1,1] avec pondération uniforme.</p>
+<p><strong>Formule récursive</strong> :</p>
+<pre class="hljs"><code><div>P₀(x) = 1
+P₁(x) = x
+(n+1)Pₙ₊₁(x) = (2n+1)x·Pₙ(x) - n·Pₙ₋₁(x)
+</div></code></pre>
+<p><strong>Propriétés</strong> :</p>
+<ul>
+<li>Orthogonaux : ∫₋₁¹ Pₘ(x)Pₙ(x) dx = 0 si m ≠ n</li>
+<li>Normalisation : ∫₋₁¹ [Pₙ(x)]² dx = 2/(2n+1)</li>
+</ul>
+<p><strong>Cas d'application</strong> :</p>
+<ul>
+<li>Méthodes spectrales pour équations différentielles</li>
+<li>Quadrature de Gauss-Legendre</li>
+<li>Développements en série pour fonctions régulières</li>
+</ul>
+<h3 id="interpolation-par-fonctions-%C3%A0-base-radiale-rbf"><strong>Interpolation par Fonctions à Base Radiale (RBF)</strong></h3>
+<h4 id="noyaux-rbf-disponibles"><strong>Noyaux RBF Disponibles</strong></h4>
+<p><strong>1. Gaussienne</strong> :</p>
+<pre class="hljs"><code><div>φ(r) = exp(-ε²r²)
+```text
+- Paramètre de forme ε ajustable
+- Support global, très lisse
+- Excellent pour fonctions régulières
+
+**2. Multiquadrique** :
+```text
+φ(r) = √(1 + (εr)²)
+```text
+- Très populaire, robuste
+- Bon conditionnement
+- Convergence spectrale prouvée
+
+**3. Inverse Multiquadrique** :
+```text
+φ(r) = 1/√(1 + (εr)²)
+```text
+- Fonction bornée
+- Moins sensible au paramètre ε
+
+**4. Thin Plate Spline** :
+```text
+φ(r) = r² log(r)
+```text
+- Support naturel sans paramètre
+- Minimise la courbure
+
+**5. Wendland (support compact)** :
+```text
+φ(r) = (1-εr)₊⁴(4εr + 1)  pour εr ≤ 1
+φ(r) = 0  pour εr &gt; 1
+```text
+- Support compact = matrices creuses
+- Coût computationnel réduit
+
+**6. Matérn** :
+```text
+φ(r) = approximation basée sur paramètre de régularité
+```text
+- Paramètre de régularité ν
+- Très flexible
+
+### **Splines Multidimensionnelles**
+
+#### **1. Splines par Produit Tensoriel**
+
+**Principe** : Extension des splines 1D au cas multidimensionnel par produits tensoriels.
+
+```text
+S(x,y) = ΣᵢΣⱼ cᵢⱼ Bᵢ(x) Bⱼ(y)
+</div></code></pre>
+<p><strong>Avantages</strong> :</p>
+<ul>
+<li>Extension naturelle des méthodes 1D</li>
+<li>Efficacité computationnelle sur grilles régulières</li>
+</ul>
+<h4 id="2-courbes-et-surfaces-de-b%C3%A9zier"><strong>2. Courbes et Surfaces de Bézier</strong></h4>
+<p><strong>Principe</strong> : Utilise des points de contrôle pour définir paramétriquement des courbes/surfaces.</p>
+<p><strong>Courbe de Bézier</strong> :</p>
+<pre class="hljs"><code><div>C(t) = Σᵢ₌₀ⁿ Pᵢ Bᵢⁿ(t)  où  Bᵢⁿ(t) = (n choose i) tⁱ(1-t)ⁿ⁻ⁱ
+</div></code></pre>
+<p><strong>Propriétés</strong> :</p>
+<ul>
+<li>Enveloppe convexe</li>
+<li>Invariance affine</li>
+<li>Évaluation stable par algorithme de De Casteljau</li>
+</ul>
+<h4 id="3-b-splines"><strong>3. B-Splines</strong></h4>
+<p><strong>B-Splines</strong> :</p>
+<pre class="hljs"><code><div>S(u) = Σᵢ Pᵢ Nᵢᵖ(u)
+```text
+où Nᵢᵖ(u) sont les fonctions de base B-spline de degré p.
+
+**Avantages** :
+- Contrôle local
+- Continuité paramétrable
+
+#### **4. Kriging (Géostatistique)**
+
+**Principe** : Interpolation optimale basée sur la théorie des variables régionalisées.
+
+**Prédiction kriging** :
+```text
+Ẑ(x₀) = Σᵢ λᵢ Z(xᵢ)
+</div></code></pre>
+<p><strong>Modèles de variogramme</strong> :</p>
+<ul>
+<li><strong>Sphérique</strong> : γ(h) = sill[1.5h/range - 0.5(h/range)³]</li>
+<li><strong>Exponentiel</strong> : γ(h) = sill[1 - exp(-h/range)]</li>
+<li><strong>Gaussien</strong> : γ(h) = sill[1 - exp(-(h/range)²)]</li>
+</ul>
+<h3 id="m%C3%A9thodes-dinterpolation-robustes"><strong>Méthodes d'Interpolation Robustes</strong></h3>
+<h4 id="1-moindres-carr%C3%A9s-g%C3%A9n%C3%A9ralis%C3%A9s"><strong>1. Moindres Carrés Généralisés</strong></h4>
+<p><strong>Principe</strong> : Minimisation de la somme des carrés des résidus.</p>
+<pre class="hljs"><code><div>min ||Ax - b||₂²
+</div></code></pre>
+<h4 id="2-r%C3%A9gression-polynomiale-avec-base-orthogonale"><strong>2. Régression Polynomiale avec Base Orthogonale</strong></h4>
+<p><strong>Principe</strong> : Utilise des polynômes orthogonaux pour améliorer le conditionnement.</p>
+<h4 id="3-splines-de-lissage-smoothing-splines"><strong>3. Splines de Lissage (Smoothing Splines)</strong></h4>
+<p><strong>Principe</strong> : Compromis entre fidélité aux données et régularité.</p>
+<p><strong>Fonctionnelle à minimiser</strong> :</p>
+<pre class="hljs"><code><div>J(f) = Σᵢ[yᵢ - f(xᵢ)]² + λ∫[f''(x)]² dx
+</div></code></pre>
+<h4 id="4-r%C3%A9gression-robuste"><strong>4. Régression Robuste</strong></h4>
+<p><strong>Principe</strong> : Diminue l'influence des outliers par des fonctions de perte robustes.</p>
+<p><strong>Fonction de perte de Huber</strong> :</p>
+<pre class="hljs"><code><div>ρ(r) = r²/2       si |r| ≤ δ
+ρ(r) = δ|r| - δ²/2  si |r| &gt; δ
+</div></code></pre>
+<p><strong>Fonction de perte de Tukey</strong> :</p>
+<pre class="hljs"><code><div>ρ(r) = (δ²/6)[1 - (1 - (r/δ)²)³]  si |r| ≤ δ
+ρ(r) = δ²/6                      si |r| &gt; δ
+</div></code></pre>
+<h4 id="5-r%C3%A9gularisation-ridgelasso"><strong>5. Régularisation (Ridge/LASSO)</strong></h4>
+<p><strong>Ridge Regression</strong> :</p>
+<pre class="hljs"><code><div>min ||Ax - b||₂² + α||x||₂²
+</div></code></pre>
+<p><strong>LASSO Regression</strong> :</p>
+<pre class="hljs"><code><div>min ||Ax - b||₂² + α||x||₁
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%9A%80-guide-dutilisation-des-m%C3%A9thodes-dinterpolation-avanc%C3%A9es">🚀 <strong>Guide d'Utilisation des Méthodes d'Interpolation Avancées</strong></h2>
+<h3 id="arbre-de-d%C3%A9cision-pour-le-choix-des-m%C3%A9thodes"><strong>Arbre de Décision pour le Choix des Méthodes</strong></h3>
+<pre class="hljs"><code><div>Données 1D régulières, fonction lisse
+├── Polynômes de Chebyshev (évite oscillations)
+└── Polynômes de Legendre (méthodes spectrales)
+
+Données 1D irrégulières
+├── RBF Gaussienne (très lisse)
+├── RBF Multiquadrique (robuste)
+└── Thin Plate Spline (naturel)
+
+Données 2D/3D sur grille régulière
+├── Splines par produit tensoriel
+└── B-splines multidimensionnelles
+
+Données 2D/3D irrégulières
+├── RBF multidimensionnelles
+└── Kriging (avec incertitude)
+
+Données bruitées
+├── Splines de lissage (λ adaptatif)
+├── Régression robuste (Huber/Tukey)
+└── Régularisation Ridge/LASSO
+
+Données avec outliers
+├── Régression robuste obligatoire
+└── Détection automatique d'outliers
+</div></code></pre>
+<h3 id="optimisation-des-param%C3%A8tres"><strong>Optimisation des Paramètres</strong></h3>
+<p><strong>RBF</strong> : Validation croisée pour paramètre de forme ε
+<strong>Splines de lissage</strong> : GCV (Generalized Cross-Validation) pour λ
+<strong>Régularisation</strong> : L-curve ou information criteria (AIC/BIC)</p>
+<hr>
+<h2 id="%F0%9F%93%8A-comparaison-des-performances">📊 <strong>Comparaison des Performances</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Coût Construction</th>
+<th>Coût Évaluation</th>
+<th>Stabilité</th>
+<th>Précision</th>
+<th>Régularité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lagrange</strong></td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Chebyshev</strong></td>
+<td>O(n²)</td>
+<td>O(n)</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>RBF Gaussienne</strong></td>
+<td>O(n³)</td>
+<td>O(n)</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Kriging</strong></td>
+<td>O(n³)</td>
+<td>O(n)</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Splines Lissage</strong></td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Régression Robuste</strong></td>
+<td>O(n²k)</td>
+<td>O(p)</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%F0%9F%8E%AF-synth%C3%A8se-du-projet-%C3%A9tendu">🎯 <strong>Synthèse du Projet Étendu</strong></h2>
+<p><strong>Méthodes Implémentées</strong> :
+✅ <strong>18 Solveurs de systèmes linéaires</strong> (directs, itératifs, gradient, avancés)
+✅ <strong>11 Méthodes d'interpolation</strong> (5 basiques + 6 avancées)<br>
+✅ <strong>4 Familles d'interpolation avancées</strong> :</p>
+<ul>
+<li>Polynômes orthogonaux (Chebyshev, Legendre, Hermite, Laguerre)</li>
+<li>RBF avec 7 noyaux différents</li>
+<li>Splines multidimensionnelles (Tensor, Bézier, B-splines, Kriging)</li>
+<li>Méthodes robustes (Least squares, régression, régularisation)</li>
+</ul>
+<p>✅ <strong>Tests exhaustifs</strong> - Validation sur différents types de matrices et fonctions
+✅ <strong>Documentation complète</strong> - Guide détaillé d'utilisation<br>
+✅ <strong>Optimisation automatique</strong> - Paramètres adaptatifs
+✅ <strong>Robustesse</strong> - Gestion des cas pathologiques<br>
+✅ <strong>Performance</strong> - Algorithmes optimisés</p>
+<p><strong>Architecture du Code</strong> :</p>
+<pre class="hljs"><code><div>include/
+├── [18 headers de solveurs]
+├── [5 headers d'interpolation basique]
+└── [4 headers d'interpolation avancée]
+
+src/
+├── solver/ [18 implémentations]
+└── interpolation/ [10 implémentations]
+
+tests/
+├── [5 suites de tests pour solveurs]
+├── [tests d'interpolation basique]
+└── [test complet d'interpolation avancée]
+</div></code></pre>
+<p><strong>Innovation Majeure</strong> : Projet complet couvrant l'ensemble des besoins en calcul numérique, de la résolution de systèmes linéaires aux méthodes d'interpolation les plus sophistiquées, avec une approche modulaire et extensible.</p>
+
+</body>
+</html>
